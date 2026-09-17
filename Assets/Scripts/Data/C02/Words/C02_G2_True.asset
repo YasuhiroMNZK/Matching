@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e954180ad81ecbd4d9eed1a10644ab7f, type: 3}
+  m_Name: C02_G2_True
+  m_EditorClassIdentifier: Assembly-CSharp::WordData
+  wordId: C02_G2_TRUE
+  displayText: "\u307E\u3063\u3059\u3050\u3053\u3061\u3089\u3092\u898B\u308B"
+  genre: 2
