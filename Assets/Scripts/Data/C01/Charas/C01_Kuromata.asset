@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503cfcceb2f65f4449846916dfc2314c, type: 3}
+  m_Name: C01_Kuromata
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  characterId: C01
+  characterName: "\u304F\u308D\u307E\u305F"
+  species: "\u9ED2\u732B\u306E\u7363\u4EBA"
+  age: 1
+  gender: "\u5973"
+  profileImage: {fileID: 21300000, guid: b064d8acaf41aaf45966bd0a80134669, type: 3}
+  iconImage: {fileID: 21300000, guid: b064d8acaf41aaf45966bd0a80134669, type: 3}
+  profileText: "\u3088\u3044\u7E01\u304C\u62DB\u304B\u308C\u307E\u3059\u3088\u3046\u306B\u3002"
+  tags:
+  - {fileID: 11400000, guid: 3ad6672e1a564c7da3a9bcec07ca753d, type: 2}
+  - {fileID: 11400000, guid: bb3c2f88a9fe48ef89b7217fde74a62e, type: 2}
+  - {fileID: 11400000, guid: 2607e7659134498fa393a738e605d8aa, type: 2}
+  - {fileID: 11400000, guid: 002f87bf170c4bbe83621345d1d75dbf, type: 2}
+  - {fileID: 11400000, guid: cee38d595076425c9ba2068d4396e195, type: 2}
+  - {fileID: 11400000, guid: 0087ff1d15d2e204bad206b4198c62c6, type: 2}
+  firstMessage: "\u3088\u308D\u3057\u304F\u306B\u3083\uFF5E"
+  initialHonesty: 60
+  placeTopics:
+  - {fileID: 11400000, guid: 2ac796e7da287a4418afb1a0c39c5a99, type: 2}
+  - {fileID: 11400000, guid: 91b4ef7f33519be4a874b13b2d56283b, type: 2}
+  - {fileID: 11400000, guid: 8de445123e614b143a06e1c1e96be355, type: 2}
+  actionTopics:
+  - {fileID: 11400000, guid: 7146c31b46a7d7f4ea00fb8ea806038c, type: 2}
+  - {fileID: 11400000, guid: ad92eb4b41ce6c54a83ef6da806b47c3, type: 2}
+  - {fileID: 11400000, guid: 055536ae0eb853a41a383f1e64c6c116, type: 2}
+  purposeTopics:
+  - {fileID: 11400000, guid: 81200b479264fb949aac1dfb71a14bbc, type: 2}
+  - {fileID: 11400000, guid: 34e3333c83c109648bbe4923c9c345d6, type: 2}
+  - {fileID: 11400000, guid: a1e0963912c85c94783e3b8ea7ee4ae1, type: 2}
+  weaknessTopics:
+  - {fileID: 11400000, guid: 9b6e73aa2d57533419122b81ab928d1e, type: 2}
+  badText: "\u2026\u2026\u3046\u3093\u3001\u3048\u3048\u3088"
+  goodText: "\u2026\u306A\u3093\u3067\u5206\u304B\u3063\u305F\u3093\u3002\u307E\u3042\u3001\u3048\u3048\u3051\u3069\u3002\u884C\u3053\u304B\u3002"
+  perfectText: "\u884C\u3053\u3002"
+  badEnding: {fileID: 11400000, guid: 4aed010384981464db136b2a08941cb2, type: 2}
+  goodEnding: {fileID: 11400000, guid: 1fce63b479320104591d262031825a77, type: 2}
+  perfectEnding: {fileID: 11400000, guid: 4aed010384981464db136b2a08941cb2, type: 2}

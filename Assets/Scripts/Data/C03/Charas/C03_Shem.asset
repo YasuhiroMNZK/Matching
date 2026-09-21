@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 503cfcceb2f65f4449846916dfc2314c, type: 3}
+  m_Name: C03_Shem
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  characterId: C03
+  characterName: "\u30B7\u30A7\u30E0"
+  species: "\u5929\u4F7F"
+  age: 1
+  gender: "\u7537"
+  profileImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
+  iconImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
+  profileText: "\u304A\u5FCD\u3073\u3067\u4EBA\u9593\u754C\u3078\u6765\u307E\u3057\u305F\u3002"
+  tags:
+  - {fileID: 11400000, guid: 2607e7659134498fa393a738e605d8aa, type: 2}
+  - {fileID: 11400000, guid: cb628e530b653f5458cc2a307895e000, type: 2}
+  - {fileID: 11400000, guid: 7cbe472ca0a723f408bb2fe5ccb0e01a, type: 2}
+  - {fileID: 11400000, guid: 69beead35d0eb8349882a44d163b68e7, type: 2}
+  - {fileID: 11400000, guid: ac8e411d00957c343b9ec30ada315bf2, type: 2}
+  - {fileID: 11400000, guid: e89f648b841b51b449821970772cc11d, type: 2}
+  firstMessage: "\u4FFA\u305F\u3061\u306E\u51FA\u4F1A\u3044\u306B\u795D\u798F\u3092\uFF01"
+  initialHonesty: 70
+  placeTopics:
+  - {fileID: 11400000, guid: 78d05321c2170bf4a8a5d4f9042f5776, type: 2}
+  - {fileID: 11400000, guid: 2591e2c0c1c310f429cf3023be2aedbb, type: 2}
+  - {fileID: 11400000, guid: b9cae74261f87954aac095b2560364bf, type: 2}
+  actionTopics:
+  - {fileID: 11400000, guid: 9a8e58c1cd399ca40bd81e4a54ede0b3, type: 2}
+  - {fileID: 11400000, guid: 2568e36ca21341d42a7ab75f24b58e9d, type: 2}
+  - {fileID: 11400000, guid: 17f0183750a0e6e4db84bcf53d50b107, type: 2}
+  purposeTopics:
+  - {fileID: 11400000, guid: 0144a13d183e65d46b9699b9187a446d, type: 2}
+  - {fileID: 11400000, guid: 5fbc8898415aecb47930682afca80b1e, type: 2}
+  - {fileID: 11400000, guid: ea183754e7c86d240baf367875ee70ce, type: 2}
+  weaknessTopics:
+  - {fileID: 11400000, guid: 87ac7cbdf95c26848a0fddb493516fe8, type: 2}
+  badText: "\u2026\u2026\u3046\u3093\u3001\u3048\u3048\u3088"
+  goodText: "\u2026\u306A\u3093\u3067\u5206\u304B\u3063\u305F\u3093\u3002\u307E\u3042\u3001\u3048\u3048\u3051\u3069\u3002\u884C\u3053\u304B\u3002"
+  perfectText: "\u884C\u3053\u3002"
+  badEnding: {fileID: 11400000, guid: 7edbe4fe4a8172c4f8f53567837840be, type: 2}
+  goodEnding: {fileID: 11400000, guid: 21861580c56956d4f96ef15f0e854b69, type: 2}
+  perfectEnding: {fileID: 11400000, guid: 7d284db9c48c6db42b6c08d62caf40c6, type: 2}

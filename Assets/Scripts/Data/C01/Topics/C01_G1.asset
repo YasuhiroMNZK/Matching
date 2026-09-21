@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92da7bbf5edb86a4597b65a833bce8a5, type: 3}
+  m_Name: C01_G1
+  m_EditorClassIdentifier: Assembly-CSharp::TopicData
+  topicId: C01_G1
+  genre: 2
+  honestyThreshold: 45
+  introText: "\u3053\u306E\u30A2\u30D7\u30EA\u3092\u5165\u308C\u305F\u7406\u7531\u306F\u306B\u3083\uFF5E"
+  aizuchiPlayerText: "\u76F8\u69CCG1"
+  aizuchiReplyText: "\u753B\u9762\u8D8A\u3057\u3060\u3068\u306B\u3083\uFF5E\u306E\u4E0D\u5E78\u3092\u3082\u305F\u3089\u3059\u529B\u306F\u767A\u63EE\u3055\u308C\u306A\u3044\u307F\u305F\u3044\u306A\u306E\u306B\u3083"
+  deepDivePlayerText: "\u6DF1\u5800G1"
+  deepDiveTrueReplyText: "\u5927\u51F6\u3092\u3072\u304F\u3088\u3046\u306A\u904B\u306E\u306A\u3044\u3084\u3064\u3068\u3082\u3001\u306B\u3083\uFF5E\u3068\u8A71\u3059\u306E\u304C\u753B\u9762\u8D8A\u3057\u306A\u3089\u4E0D\u5E78\u306B\u3057\u306A\u3044\u307F\u305F\u3044\u306A\u306E\u306B\u3083\u3002"
+  deepDiveFalseReplyText: "\u4EBA\u9593\u4EE5\u5916\u3082\u4E0D\u5E78\u306B\u3067\u304D\u308B\u306E\u304B\u6C17\u306B\u306A\u3063\u305F\u306B\u3083\u3002"
+  smallTalkPlayerText: 
+  smallTalkReplyText: 
+  trueWords:
+  - {fileID: 11400000, guid: 3e49894c05e637e4888b3afd5edd9c71, type: 2}
+  falseWords:
+  - {fileID: 11400000, guid: 1cf33dbe3bb587f4ab625314af4e03de, type: 2}

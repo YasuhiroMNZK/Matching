@@ -1112,6 +1112,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchingSceneController
   character: {fileID: 11400000, guid: 212cd3c152b649cfb947403d6dbe9ebd, type: 2}
+  characterPool:
+  - {fileID: 11400000, guid: c0c37f5ce1b19ca409cf53c349987800, type: 2}
+  - {fileID: 11400000, guid: 212cd3c152b649cfb947403d6dbe9ebd, type: 2}
+  - {fileID: 11400000, guid: bcca2d61b211765409c5b52a113c5be8, type: 2}
+  - {fileID: 11400000, guid: 5367a31bf89ad5f44a5347dc3b44aa82, type: 2}
   uiRoot: {fileID: 1175630192}
   portraitImage: {fileID: 248719804}
   characterNameText: {fileID: 79913548}
@@ -1174,7 +1179,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.12, y: 0.06}
   m_AnchorMax: {x: 0.39, y: 0.15}
-  m_AnchoredPosition: {x: 327.4, y: 61.518}
+  m_AnchoredPosition: {x: 327.39996, y: 61.517944}
   m_SizeDelta: {x: -340.9431, y: 76.9232}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &479405825

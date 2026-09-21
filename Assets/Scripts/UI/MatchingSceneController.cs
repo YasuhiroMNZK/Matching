@@ -10,6 +10,12 @@ public sealed class MatchingSceneController : MonoBehaviour
 {
     [Header("Data")]
     [SerializeField] private CharacterData character;
+    [SerializeField, Tooltip("Characters available this visit. Shuffled once when the scene starts; empty entries and duplicates are ignored. Falls back to Character when empty.")]
+    private List<CharacterData> characterPool = new();
+
+    private readonly List<CharacterData> characterOrder = new();
+    private readonly Dictionary<CharacterData, List<TagData>> displayedTags = new();
+    private int characterIndex;
 
     [Header("Scene UI")]
     [SerializeField] private RectTransform uiRoot;
@@ -28,6 +34,10 @@ public sealed class MatchingSceneController : MonoBehaviour
         if (FindFirstObjectByType<EventSystem>() == null)
             new GameObject("EventSystem", typeof(EventSystem), typeof(InputSystemUIInputModule));
 
+        BuildCharacterOrder();
+        displayedTags.Clear();
+        foreach (CharacterData candidate in characterOrder)
+            displayedTags.Add(candidate, SelectDisplayTags(candidate));
         if (character == null || uiRoot == null)
         {
             Debug.LogError("MatchingScene UI or CharacterData is not assigned.", this);
@@ -64,14 +74,37 @@ public sealed class MatchingSceneController : MonoBehaviour
         RefreshTags();
     }
 
-    private void RefreshTags()
+    private void BuildCharacterOrder()
     {
-        // Keep the scene layout editable. Missing Inspector references are resolved
-        // from the existing Tag1-Tag4 objects, including inactive objects.
+        characterOrder.Clear();
+        if (characterPool != null)
+        {
+            foreach (CharacterData candidate in characterPool)
+            {
+                if (candidate != null && !characterOrder.Contains(candidate))
+                    characterOrder.Add(candidate);
+            }
+        }
 
+        // Preserve existing single-character scenes when no pool is configured.
+        if (characterOrder.Count == 0 && character != null)
+            characterOrder.Add(character);
+
+        for (int i = characterOrder.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (characterOrder[i], characterOrder[randomIndex]) = (characterOrder[randomIndex], characterOrder[i]);
+        }
+
+        characterIndex = 0;
+        character = characterOrder.Count > 0 ? characterOrder[0] : null;
+    }
+
+    private static List<TagData> SelectDisplayTags(CharacterData data)
+    {
         List<TagData> candidates = new();
         HashSet<string> seenNames = new();
-        foreach (TagData tag in character.Tags)
+        foreach (TagData tag in data.Tags)
         {
             if (tag != null && !string.IsNullOrWhiteSpace(tag.DisplayName) && seenNames.Add(tag.DisplayName))
                 candidates.Add(tag);
@@ -81,6 +114,18 @@ public sealed class MatchingSceneController : MonoBehaviour
         {
             int randomIndex = Random.Range(0, i + 1);
             (candidates[i], candidates[randomIndex]) = (candidates[randomIndex], candidates[i]);
+        }
+
+        return candidates.GetRange(0, Mathf.Min(4, candidates.Count));
+    }
+
+    private void RefreshTags()
+    {
+        if (!displayedTags.TryGetValue(character, out List<TagData> candidates))
+        {
+            // ConfigureView also renders an editor preview before Start runs.
+            candidates = SelectDisplayTags(character);
+            displayedTags.Add(character, candidates);
         }
 
         for (int i = 0; i < 4; i++)
@@ -107,12 +152,17 @@ public sealed class MatchingSceneController : MonoBehaviour
         return null;
     }
 
-    public void Pass() {
-        
+    public void Pass()
+    {
+        if (characterOrder.Count == 0) return;
+        characterIndex = (characterIndex + 1) % characterOrder.Count;
+        character = characterOrder[characterIndex];
+        RefreshCharacter();
     }
 
     public void Match()
     {
+        if (character == null) return;
         GameSession.SelectCharacter(character);
         SceneManager.LoadScene("ChatScene");
     }

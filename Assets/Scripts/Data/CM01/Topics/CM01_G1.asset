@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92da7bbf5edb86a4597b65a833bce8a5, type: 3}
+  m_Name: CM01_G1
+  m_EditorClassIdentifier: Assembly-CSharp::TopicData
+  topicId: CM01_G1
+  genre: 2
+  honestyThreshold: 45
+  introText: "\u79C1\u304C\u3053\u306E\u30A2\u30D7\u30EA\u3092\u5165\u308C\u305F\u7406\u7531\uFF1F"
+  aizuchiPlayerText: "\u76F8\u69CCG1"
+  aizuchiReplyText: "\u3046\u307E\u304F\u7B11\u3048\u306A\u3044\u79C1\u3067\u3082\u604B\u304C\u3067\u304D\u308B\u304B\u306A\u3063\u3066\u3002"
+  deepDivePlayerText: "\u6DF1\u5800G1"
+  deepDiveTrueReplyText: "\u7D20\u306E\u8868\u60C5\u3092\u8A8D\u3081\u3066\u304F\u308C\u308B\u4EBA\u3068\u51FA\u4F1A\u3048\u305F\u3089\u306A\u3063\u3066\u2026"
+  deepDiveFalseReplyText: "\u5199\u771F\u3092\u9001\u3063\u3066\u79C1\u3001\u7DBA\u9E97\u304B\u805E\u3044\u3066\u56DE\u3063\u3066\u308B\u306E\u3002"
+  smallTalkPlayerText: 
+  smallTalkReplyText: 
+  trueWords:
+  - {fileID: 11400000, guid: d36e20e66fb35974a9806b555bb11992, type: 2}
+  falseWords:
+  - {fileID: 11400000, guid: 56d10d55b3f264f49a303503709e2f54, type: 2}

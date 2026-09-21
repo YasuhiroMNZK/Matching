@@ -62,15 +62,17 @@ public sealed class ChatManager : MonoBehaviour
 
     private readonly Dictionary<TopicGenre, List<TopicData>> remainingTopics = new();
     private TopicGenre? currentGenre;
+    private bool hasForcedWeaknessSmallTalk;
 
     public CharacterData Character => character;
     public HonestyManager Honesty => honestyManager;
     public WordManager Words => wordManager;
     public TopicData CurrentTopic { get; private set; }
     public int CompletedTurns { get; private set; }
+    public bool HasTriggeredWeakness { get; private set; }
     public ChatState State { get; private set; } = ChatState.NotStarted;
     public bool CanInviteToDate => wordManager != null && wordManager.HasInvitationWords;
-    public bool CanChooseWeakness => honestyManager != null && honestyManager.CanAccessWeakness && HasRemaining(TopicGenre.Weakness);
+    public bool CanChooseWeakness => !HasTriggeredWeakness && honestyManager != null && honestyManager.CanAccessWeakness && HasRemaining(TopicGenre.Weakness);
     public TopicEvent OnTopicStarted => onTopicStarted;
     public ChatReplyEvent OnReply => onReply;
     public WordAcquiredEvent OnWordAcquired => onWordAcquired;
@@ -104,6 +106,8 @@ public sealed class ChatManager : MonoBehaviour
         BuildTopicPools();
         CurrentTopic = null;
         currentGenre = null;
+        hasForcedWeaknessSmallTalk = false;
+        HasTriggeredWeakness = false;
         CompletedTurns = 0;
         State = ChatState.AwaitingCommand;
 
@@ -161,7 +165,7 @@ public sealed class ChatManager : MonoBehaviour
 
     public bool ChooseSmallTalk(TopicGenre nextGenre)
     {
-        if (!TryPrepareTopic(nextGenre))
+        if (!TryPrepareSmallTalk(nextGenre))
             return false;
 
         TopicData topic = CurrentTopic;
@@ -172,7 +176,7 @@ public sealed class ChatManager : MonoBehaviour
 
     public bool ChooseSmallTalk()
     {
-        if (!TryPrepareTopic(true))
+        if (!TryPrepareSmallTalk(null))
             return false;
 
         TopicData topic = CurrentTopic;
@@ -197,7 +201,7 @@ public sealed class ChatManager : MonoBehaviour
         if (State != ChatState.DateInvitation)
             throw new InvalidOperationException("The chat is not in the date invitation phase.");
 
-        EndingType result = wordManager.EvaluateInvitation();
+        EndingType result = wordManager.EvaluateInvitation(HasTriggeredWeakness);
         State = ChatState.Finished;
 
         return result switch
@@ -244,7 +248,11 @@ public sealed class ChatManager : MonoBehaviour
             CurrentTopic = pool[0];
             pool.RemoveAt(0);
         }
-        currentGenre = genre;
+        // Weakness is an interlude: keep the ordinary genre for the next command.
+        if (genre == TopicGenre.Weakness)
+            HasTriggeredWeakness = true;
+        else
+            currentGenre = genre;
         State = ChatState.AwaitingCommand;
         onTopicStarted.Invoke(CurrentTopic);
 
@@ -312,6 +320,27 @@ public sealed class ChatManager : MonoBehaviour
     private bool CanExecuteCommand()
     {
         return State == ChatState.AwaitingCommand;
+    }
+
+    private bool TryPrepareSmallTalk(TopicGenre? requestedGenre)
+    {
+        if (!CanExecuteCommand())
+            return false;
+
+        // Once per chat, the first eligible small talk must select Weakness,
+        // even when the caller requests a different genre.
+        if (!hasForcedWeaknessSmallTalk && CanChooseWeakness)
+        {
+            if (!TryPrepareTopic(TopicGenre.Weakness))
+                return false;
+
+            hasForcedWeaknessSmallTalk = true;
+            return true;
+        }
+
+        return requestedGenre.HasValue
+            ? TryPrepareTopic(requestedGenre.Value)
+            : TryPrepareTopic(true);
     }
 
     private bool TryPrepareTopic(bool switchGenre)

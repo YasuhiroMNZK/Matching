@@ -98,7 +98,7 @@ public sealed class WordManager : MonoBehaviour
         }
     }
 
-    public EndingType EvaluateInvitation()
+    public EndingType EvaluateInvitation(bool hasTriggeredWeakness)
     {
         if (!IsInvitationComplete)
             throw new InvalidOperationException("All three invitation slots must be filled before evaluation.");
@@ -106,7 +106,7 @@ public sealed class WordManager : MonoBehaviour
         if (!IsTruth(SelectedPlace) || !IsTruth(SelectedAction) || !IsTruth(SelectedPurpose))
             return EndingType.Bad;
 
-        return HasWeakness ? EndingType.Perfect : EndingType.Good;
+        return hasTriggeredWeakness ? EndingType.Perfect : EndingType.Good;
     }
 
     public void ClearSelection()
