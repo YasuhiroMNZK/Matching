@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C02_A3_False
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C02_A3_FALSE
-  displayText: "一人で過ごす"
+  displayText: "\u96a0\u9041"
   genre: 1

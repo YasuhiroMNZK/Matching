@@ -15,7 +15,7 @@ MonoBehaviour:
   characterId: CM01
   characterName: "\u3055\u304D\u3053"
   species: "\u53E3\u88C2\u3051\u5973"
-  age: 1
+  age: 47
   gender: "\u5973"
   profileImage: {fileID: -6422801332153294651, guid: c4d0990e4dad5e148a372f2c84c29f1d, type: 3}
   iconImage: {fileID: 21300000, guid: d1cbd4f11e5a519498562cb007e80188, type: 3}

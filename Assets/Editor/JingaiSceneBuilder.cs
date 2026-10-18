@@ -128,6 +128,10 @@ public static class JingaiSceneBuilder
     {
         EndingSceneController controller = new GameObject("EndingSceneController").AddComponent<EndingSceneController>();
         RectTransform canvas = SceneUiFactory.CreateCanvas("EndingCanvas");
+        Image background = SceneUiFactory.PanelObject("EndingBackground", canvas, Color.white).GetComponent<Image>();
+        SceneUiFactory.Stretch(background.rectTransform);
+        background.raycastTarget = false;
+        background.enabled = false;
         TMP_Text eyebrow = SceneUiFactory.Text("Eyebrow", canvas, "ENDING & RESULT", 30);
         SceneUiFactory.SetRect(eyebrow.rectTransform, new Vector2(.08f, .87f), new Vector2(.92f, .95f), Vector2.zero, Vector2.zero);
         RectTransform panel = SceneUiFactory.PanelObject("EndingPanel", canvas, SceneUiFactory.Panel);
@@ -137,7 +141,7 @@ public static class JingaiSceneBuilder
         TMP_Text body = SceneUiFactory.Text("EndingBody", panel, "EndingData の本文がここに表示されます。", 34, TextAlignmentOptions.TopLeft);
         SceneUiFactory.SetRect(body.rectTransform, new Vector2(.1f, .08f), new Vector2(.9f, .68f), Vector2.zero, Vector2.zero);
         Button retry = FixedButton("RetryButton", canvas, "もう一度遊ぶ", new Vector2(.15f, .07f), new Vector2(.85f, .15f), SceneUiFactory.Accent);
-        controller.ConfigureView(canvas, title, body, retry);
+        controller.ConfigureView(canvas, title, body, retry, background);
         EditorUtility.SetDirty(controller);
     }
 

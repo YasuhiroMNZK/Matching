@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C02_A2_False
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C02_A2_FALSE
-  displayText: "石像を彫る"
+  displayText: "\u5f6b\u523b"
   genre: 1

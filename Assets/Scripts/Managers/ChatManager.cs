@@ -25,6 +25,7 @@ public enum ChatState
 public sealed class ChatManager : MonoBehaviour
 {
     public const int MaximumTurns = 10;
+    private const string SmallTalkMessage = "世間話";
 
     [Header("Session")]
     [SerializeField]
@@ -113,6 +114,8 @@ public sealed class ChatManager : MonoBehaviour
 
         if (!string.IsNullOrWhiteSpace(character.FirstMessage))
             PublishMessage(string.Empty, character.FirstMessage);
+
+        TryPrepareTopic(false);
     }
 
     public bool BeginNextTopic()
@@ -134,7 +137,7 @@ public sealed class ChatManager : MonoBehaviour
             return false;
 
         TopicData topic = CurrentTopic;
-        PublishTopicDialogue(topic, topic.AizuchiPlayerText, topic.AizuchiReplyText);
+        PublishTopicReply(topic.AizuchiPlayerText, topic.AizuchiReplyText);
         honestyManager.ApplyAizuchi();
         CompleteTurn();
         return true;
@@ -156,7 +159,7 @@ public sealed class ChatManager : MonoBehaviour
             onWordAcquired.Invoke(acquired.Data);
         }
 
-        PublishTopicDialogue(topic, topic.DeepDivePlayerText, reply);
+        PublishTopicReply(topic.DeepDivePlayerText, reply);
 
         honestyManager.ApplyDeepDive();
         CompleteTurn();
@@ -165,24 +168,12 @@ public sealed class ChatManager : MonoBehaviour
 
     public bool ChooseSmallTalk(TopicGenre nextGenre)
     {
-        if (!TryPrepareSmallTalk(nextGenre))
-            return false;
-
-        TopicData topic = CurrentTopic;
-        PublishTopicDialogue(topic, topic.SmallTalkPlayerText, topic.SmallTalkReplyText);
-        CompleteTurn();
-        return true;
+        return ChooseSmallTalkCore(nextGenre);
     }
 
     public bool ChooseSmallTalk()
     {
-        if (!TryPrepareSmallTalk(null))
-            return false;
-
-        TopicData topic = CurrentTopic;
-        PublishTopicDialogue(topic, topic.SmallTalkPlayerText, topic.SmallTalkReplyText);
-        CompleteTurn();
-        return true;
+        return ChooseSmallTalkCore(null);
     }
 
     public bool InviteToDate()
@@ -215,7 +206,7 @@ public sealed class ChatManager : MonoBehaviour
 
     private bool BeginNextTopic(TopicGenre? requestedGenre)
     {
-        if (State == ChatState.DateInvitation || State == ChatState.Finished)
+        if (!CanExecuteCommand())
             return false;
 
         List<TopicGenre> availableGenres = GetAvailableGenres();
@@ -241,12 +232,10 @@ public sealed class ChatManager : MonoBehaviour
             if (eligible.Count == 0)
                 return false;
             CurrentTopic = eligible[UnityEngine.Random.Range(0, eligible.Count)];
-            pool.Remove(CurrentTopic);
         }
         else
         {
             CurrentTopic = pool[0];
-            pool.RemoveAt(0);
         }
         // Weakness is an interlude: keep the ordinary genre for the next command.
         if (genre == TopicGenre.Weakness)
@@ -255,16 +244,21 @@ public sealed class ChatManager : MonoBehaviour
             currentGenre = genre;
         State = ChatState.AwaitingCommand;
         onTopicStarted.Invoke(CurrentTopic);
+        PublishMessage(string.Empty, CurrentTopic.IntroText);
 
         return true;
     }
 
-    private void CompleteTurn()
+    private void CompleteTurn(bool prepareNextTopic = true)
     {
+        // Showing an intro reserves the topic; only a command consumes it.
+        remainingTopics[CurrentTopic.Genre].Remove(CurrentTopic);
         CompletedTurns++;
         CurrentTopic = null;
         if (CompletedTurns >= MaximumTurns || GetAvailableGenres().Count == 0)
             RequireDateInvitation();
+        else if (prepareNextTopic)
+            TryPrepareTopic(false);
     }
 
     private void RequireDateInvitation()
@@ -274,10 +268,9 @@ public sealed class ChatManager : MonoBehaviour
         onDateInvitationRequired.Invoke();
     }
 
-    private void PublishTopicDialogue(TopicData topic, string playerText, string replyText)
+    private void PublishTopicReply(string playerText, string replyText)
     {
-        PublishMessage(playerText, topic.IntroText);
-        PublishMessage(string.Empty, replyText);
+        PublishMessage(playerText, replyText);
     }
 
     private void PublishMessage(string playerText, string npcText)
@@ -322,32 +315,61 @@ public sealed class ChatManager : MonoBehaviour
         return State == ChatState.AwaitingCommand;
     }
 
-    private bool TryPrepareSmallTalk(TopicGenre? requestedGenre)
+    private bool ChooseSmallTalkCore(TopicGenre? requestedGenre)
     {
-        if (!CanExecuteCommand())
+        if (!CanExecuteCommand() || CurrentTopic == null)
             return false;
 
-        // Once per chat, the first eligible small talk must select Weakness,
-        // even when the caller requests a different genre.
-        if (!hasForcedWeaknessSmallTalk && CanChooseWeakness)
+        bool forceWeakness = !hasForcedWeaknessSmallTalk && CanChooseWeakness;
+        if (forceWeakness || requestedGenre == TopicGenre.Weakness)
         {
-            if (!TryPrepareTopic(TopicGenre.Weakness))
+            if (!CanChooseWeakness)
                 return false;
 
+            // Weakness is a one-turn interlude. Show only its intro and retain
+            // the previously introduced ordinary topic for the next command.
+            TopicData interruptedTopic = CurrentTopic;
+            PublishMessage(SmallTalkMessage, string.Empty);
+            BeginNextTopic(TopicGenre.Weakness);
             hasForcedWeaknessSmallTalk = true;
+            remainingTopics[TopicGenre.Weakness].Remove(CurrentTopic);
+            CompletedTurns++;
+            if (CompletedTurns >= MaximumTurns || GetAvailableGenres().Count == 0)
+                RequireDateInvitation();
+            else
+                CurrentTopic = interruptedTopic;
             return true;
         }
 
-        return requestedGenre.HasValue
-            ? TryPrepareTopic(requestedGenre.Value)
-            : TryPrepareTopic(true);
+        // Small talk ends the current topic, then introduces (but does not
+        // immediately answer or consume) the destination topic.
+        List<TopicGenre> candidates = GetAvailableGenres();
+        candidates.RemoveAll(genre => !remainingTopics[genre].Exists(topic => topic != CurrentTopic));
+        TopicGenre? nextGenre = requestedGenre;
+        if (nextGenre.HasValue)
+        {
+            if (!candidates.Contains(nextGenre.Value)) return false;
+        }
+        else
+        {
+            if (currentGenre.HasValue && candidates.Count > 1)
+                candidates.Remove(currentGenre.Value);
+            if (candidates.Count > 0)
+                nextGenre = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+        }
+
+        PublishMessage(SmallTalkMessage, string.Empty);
+        CompleteTurn(false);
+        if (State == ChatState.AwaitingCommand && nextGenre.HasValue)
+            BeginNextTopic(nextGenre.Value);
+        return true;
     }
 
     private bool TryPrepareTopic(bool switchGenre)
     {
         if (!CanExecuteCommand())
             return false;
-        if (CurrentTopic != null)
+        if (CurrentTopic != null && !switchGenre)
             return true;
 
         List<TopicGenre> candidates = GetAvailableGenres();
@@ -367,15 +389,6 @@ public sealed class ChatManager : MonoBehaviour
             selectedGenre = candidates[UnityEngine.Random.Range(0, candidates.Count)];
 
         return BeginNextTopic(selectedGenre);
-    }
-
-    private bool TryPrepareTopic(TopicGenre genre)
-    {
-        if (!CanExecuteCommand() || !HasRemaining(genre))
-            return false;
-        if (genre == TopicGenre.Weakness && !CanChooseWeakness)
-            return false;
-        return BeginNextTopic(genre);
     }
 
     private void BuildTopicPools()

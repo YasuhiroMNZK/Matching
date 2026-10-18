@@ -14,6 +14,14 @@ public sealed class ChatSceneController : MonoBehaviour
     [SerializeField, Min(0f)] private float returnDelay = 2.5f;
     [SerializeField, Min(0f)] private float endingTransitionDelay = 2.5f;
 
+    [Header("Audio")]
+    [SerializeField, Tooltip("Leave empty to continue the BGM from MatchingScene. The same clip also continues without restarting.")]
+    private AudioClip bgm;
+    [SerializeField, Range(0f, 1f)] private float bgmVolume = 0.65f;
+    [SerializeField] private AudioClip optionSe;
+    [SerializeField, Range(0f, 1f)] private float optionSeVolume = 1f;
+    private AudioSource optionSeSource;
+
     [Header("Scene UI")]
     [SerializeField] private RectTransform uiRoot;
     [SerializeField] private ScrollRect messageScroll;
@@ -30,14 +38,31 @@ public sealed class ChatSceneController : MonoBehaviour
     [SerializeField] private TMP_Text invitationHeadingText;
     [SerializeField] private Button invitationDecideButton;
 
+    [Header("Invitation Word Colors")]
+    [SerializeField] private Color placeWordColor = new(0.35f, 0.75f, 1f, 1f);
+    [SerializeField] private Color actionWordColor = new(1f, 0.75f, 0.35f, 1f);
+    [SerializeField] private Color purposeWordColor = new(0.8f, 0.6f, 1f, 1f);
+
     private ChatManager chat;
     private HonestyManager honesty;
     private WordManager words;
-    private readonly List<Button> wordButtons = new();
+    private readonly Dictionary<Button, WordGenre> wordButtons = new();
     private bool transitioning;
+    private bool refreshInvitationColors;
+
+    private void OnValidate() => refreshInvitationColors = true;
+
+    private void Update()
+    {
+        if (!refreshInvitationColors || words == null) return;
+        refreshInvitationColors = false;
+        RefreshInvitationWordColors();
+        RefreshInvitationHeading();
+    }
 
     private void Start()
     {
+        GameAudioManager.PlayBgm(bgm, bgmVolume, keepCurrentIfUnassigned: true);
         CharacterData character = GameSession.Character != null ? GameSession.Character : fallbackCharacter;
         if (character == null || uiRoot == null)
         {
@@ -91,9 +116,36 @@ public sealed class ChatSceneController : MonoBehaviour
         AddMessage(npc, false);
     }
 
-    public void ChooseAizuchi() => chat?.ChooseAizuchi();
-    public void ChooseDeepDive() => chat?.ChooseDeepDive();
-    public void ChooseSmallTalk() => chat?.ChooseSmallTalk();
+    public void ChooseAizuchi()
+    {
+        if (chat != null && chat.ChooseAizuchi()) PlayOptionSe();
+    }
+
+    public void ChooseDeepDive()
+    {
+        if (chat != null && chat.ChooseDeepDive()) PlayOptionSe();
+    }
+
+    public void ChooseSmallTalk()
+    {
+        if (chat != null && chat.ChooseSmallTalk()) PlayOptionSe();
+    }
+
+    private void PlayOptionSe()
+    {
+        if (optionSe == null) return;
+        if (optionSeSource == null)
+        {
+            optionSeSource = gameObject.AddComponent<AudioSource>();
+            optionSeSource.playOnAwake = false;
+            optionSeSource.loop = false;
+            optionSeSource.spatialBlend = 0f;
+        }
+        optionSeSource.Stop();
+        optionSeSource.clip = optionSe;
+        optionSeSource.volume = optionSeVolume;
+        optionSeSource.Play();
+    }
 
     private void AddMessage(string value, bool player)
     {
@@ -143,20 +195,49 @@ public sealed class ChatSceneController : MonoBehaviour
             WordData word = words.AcquiredWords[i].Data;
             if (word.Genre == WordGenre.Weakness) continue;
             Button button = SceneUiFactory.Button("Word_" + word.WordId, invitationWordList,
-                $"{word.Genre}　{word.DisplayText}", SceneUiFactory.Muted);
+                word.DisplayText, SceneUiFactory.Muted);
             LayoutElement layout = button.gameObject.AddComponent<LayoutElement>();
             layout.preferredHeight = 78f;
             button.onClick.AddListener(() => { words.TrySelect(word); RefreshInvitationHeading(); });
-            wordButtons.Add(button);
+            wordButtons.Add(button, word.Genre);
         }
+        RefreshInvitationWordColors();
         RefreshInvitationHeading();
         invitationOverlay.SetActive(true);
     }
 
     private void RefreshInvitationHeading()
     {
-        invitationHeadingText.text = $"{words.SelectedPlace?.DisplayText ?? "---"}に行って、{words.SelectedAction?.DisplayText ?? "---"}。{words.SelectedPurpose?.DisplayText ?? "---"}のを楽しもう！";
+        invitationHeadingText.richText = true;
+        invitationHeadingText.text = $"{InvitationSlot(words.SelectedPlace, WordGenre.Place)}に行って、{InvitationSlot(words.SelectedAction, WordGenre.Action)}しよう。{InvitationSlot(words.SelectedPurpose, WordGenre.Purpose)}ために。";
         invitationDecideButton.gameObject.SetActive(words.IsInvitationComplete);
+    }
+
+    private Color InvitationWordColor(WordGenre genre)
+    {
+        return genre switch
+        {
+            WordGenre.Place => placeWordColor,
+            WordGenre.Action => actionWordColor,
+            WordGenre.Purpose => purposeWordColor,
+            _ => Color.white
+        };
+    }
+
+    private string InvitationSlot(WordData word, WordGenre genre)
+    {
+        string color = ColorUtility.ToHtmlStringRGBA(InvitationWordColor(genre));
+        return $"<color=#{color}>{word?.DisplayText ?? "---"}</color>";
+    }
+
+    private void RefreshInvitationWordColors()
+    {
+        foreach (KeyValuePair<Button, WordGenre> item in wordButtons)
+        {
+            if (item.Key == null) continue;
+            TMP_Text label = item.Key.GetComponentInChildren<TMP_Text>();
+            if (label != null) label.color = InvitationWordColor(item.Value);
+        }
     }
 
     public void CompleteInvitation()
@@ -204,8 +285,8 @@ public sealed class ChatSceneController : MonoBehaviour
 
     private void ClearWordButtons()
     {
-        for (int i = 0; i < wordButtons.Count; i++)
-            if (wordButtons[i] != null) Destroy(wordButtons[i].gameObject);
+        foreach (Button button in wordButtons.Keys)
+            if (button != null) Destroy(button.gameObject);
         wordButtons.Clear();
     }
 

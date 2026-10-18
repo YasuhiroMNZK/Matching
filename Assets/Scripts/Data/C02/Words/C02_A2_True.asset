@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C02_A2_True
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C02_A2_TRUE
-  displayText: "蒸気アイマスクをつけて寝る"
+  displayText: "\u30db\u30c3\u30c8\u30a2\u30a4\u30de\u30b9\u30af"
   genre: 1

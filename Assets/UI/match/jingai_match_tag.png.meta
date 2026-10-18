@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: fbe98f937be69d14d94543aa82a7e047
+guid: 4ecf700cf643e62428baa408eb78282b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2554130652296151003
-    second: jingai_match_tag_0
+      213: -206193399534779452
+    second: jingai_match_tag 1_0
   - first:
-      213: -8559257536275122885
-    second: jingai_match_tag_1
+      213: -4787225440723243135
+    second: jingai_match_tag 1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,15 +99,28 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jingai_match_tag_0
+      name: jingai_match_tag 1_0
       rect:
         serializedVersion: 2
-        x: 1185
-        y: 375
+        x: 1182
+        y: 526
         width: 683
         height: 456
       alignment: 0
@@ -118,18 +131,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bdf7c00cb48127320800000000000000
-      internalID: 2554130652296151003
+      spriteID: 4c303b11234732df0800000000000000
+      internalID: -206193399534779452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jingai_match_tag_1
+      name: jingai_match_tag 1_1
       rect:
         serializedVersion: 2
-        x: 1644
-        y: 718
+        x: 1641
+        y: 869
         width: 43
         height: 150
       alignment: 0
@@ -140,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b357c31ae98673980800000000000000
-      internalID: -8559257536275122885
+      spriteID: 18f6af153db509db0800000000000000
+      internalID: -4787225440723243135
       vertices: []
       indices: 
       edges: []
@@ -160,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jingai_match_tag_0: 2554130652296151003
-      jingai_match_tag_1: -8559257536275122885
+      jingai_match_tag 1_0: -206193399534779452
+      jingai_match_tag 1_1: -4787225440723243135
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

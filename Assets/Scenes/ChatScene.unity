@@ -1445,7 +1445,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u5834\u6240: ---\u3000\u884C\u52D5: --- \u76EE\u7684: ---"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2419,6 +2419,10 @@ MonoBehaviour:
   invitationReplyDelay: 1
   returnDelay: 2.5
   endingTransitionDelay: 2.5
+  bgm: {fileID: 0}
+  bgmVolume: 0.65
+  optionSe: {fileID: 8300000, guid: 90181644c2c80a040a4acf79082bc737, type: 3}
+  optionSeVolume: 1
   uiRoot: {fileID: 1175630192}
   messageScroll: {fileID: 265837321}
   messageContent: {fileID: 269920894}
@@ -2431,6 +2435,9 @@ MonoBehaviour:
   invitationWordList: {fileID: 576012427}
   invitationHeadingText: {fileID: 1156386529}
   invitationDecideButton: {fileID: 707983496}
+  placeWordColor: {r: 0.35, g: 0.75, b: 1, a: 1}
+  actionWordColor: {r: 1, g: 0.75, b: 0.35, a: 1}
+  purposeWordColor: {r: 0.6048132, g: 1, b: 0.6, a: 1}
 --- !u!4 &2093155217
 Transform:
   m_ObjectHideFlags: 0

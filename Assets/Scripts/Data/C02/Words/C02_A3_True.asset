@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C02_A3_True
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C02_A3_TRUE
-  displayText: "星を見る"
+  displayText: "\u661f\u5ea7\u89b3\u8cde"
   genre: 1

@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: 924f5972f31875f4494ea8a71de2c2b3
+guid: 69e9324af80cf99478d42ddc81d12266
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7559959033706492324
-    second: jingai_match_profile_0
+      213: 5032796546701673221
+    second: jingai_match_profile 1_0
   - first:
-      213: -6562621005556720520
-    second: jingai_match_profile_1
+      213: 6079757092450327226
+    second: jingai_match_profile 1_1
   - first:
-      213: -3067528034624718461
-    second: jingai_match_profile_2
+      213: 2672431492261602889
+    second: jingai_match_profile 1_2
   - first:
-      213: -1330413794495573944
-    second: jingai_match_profile_3
+      213: -3977064937061535536
+    second: jingai_match_profile 1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,15 +105,28 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: jingai_match_profile_0
+      name: jingai_match_profile 1_0
       rect:
         serializedVersion: 2
-        x: 242
-        y: 899
+        x: 238
+        y: 794
         width: 38
         height: 150
       alignment: 0
@@ -124,18 +137,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5e4b6f2051a51790800000000000000
-      internalID: -7559959033706492324
+      spriteID: 50347f85bc518d540800000000000000
+      internalID: 5032796546701673221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jingai_match_profile_1
+      name: jingai_match_profile 1_1
       rect:
         serializedVersion: 2
-        x: 283
-        y: 1026
+        x: 279
+        y: 921
         width: 24
         height: 23
       alignment: 0
@@ -146,18 +159,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 87c564837f2ece4a0800000000000000
-      internalID: -6562621005556720520
+      spriteID: abad9281dd2af5450800000000000000
+      internalID: 6079757092450327226
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jingai_match_profile_2
+      name: jingai_match_profile 1_2
       rect:
         serializedVersion: 2
-        x: 312
-        y: 899
+        x: 308
+        y: 794
         width: 31
         height: 149
       alignment: 0
@@ -168,18 +181,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 38934a54183fd65d0800000000000000
-      internalID: -3067528034624718461
+      spriteID: 946e1d67842661520800000000000000
+      internalID: 2672431492261602889
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jingai_match_profile_3
+      name: jingai_match_profile 1_3
       rect:
         serializedVersion: 2
-        x: 55
-        y: 555
+        x: 51
+        y: 450
         width: 680
         height: 452
       alignment: 0
@@ -190,8 +203,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 840dfc6e3bb698de0800000000000000
-      internalID: -1330413794495573944
+      spriteID: 0d039c9d280aec8c0800000000000000
+      internalID: -3977064937061535536
       vertices: []
       indices: 
       edges: []
@@ -210,10 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      jingai_match_profile_0: -7559959033706492324
-      jingai_match_profile_1: -6562621005556720520
-      jingai_match_profile_2: -3067528034624718461
-      jingai_match_profile_3: -1330413794495573944
+      jingai_match_profile 1_0: 5032796546701673221
+      jingai_match_profile 1_1: 6079757092450327226
+      jingai_match_profile 1_2: 2672431492261602889
+      jingai_match_profile 1_3: -3977064937061535536
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

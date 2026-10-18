@@ -15,10 +15,10 @@ MonoBehaviour:
   characterId: C02
   characterName: "\u30A2\u30EA\u30FC\u30B7\u30A2"
   species: "\u30E1\u30C7\u30E5\u30FC\u30B5"
-  age: 1
+  age: 3514
   gender: "\u5973"
-  profileImage: {fileID: 21300000, guid: d1cbd4f11e5a519498562cb007e80188, type: 3}
-  iconImage: {fileID: -6422801332153294651, guid: c4d0990e4dad5e148a372f2c84c29f1d, type: 3}
+  profileImage: {fileID: 21300000, guid: c0edf6823396d834495ed3d8db4a1fab, type: 3}
+  iconImage: {fileID: 21300000, guid: c0edf6823396d834495ed3d8db4a1fab, type: 3}
   profileText: "\u6065\u305A\u304B\u3057\u304C\u308A\u3084\u3067\u76EE\u3092\u5408\u308F\u305B\u3089\u308C\u307E\u305B\u3093\u3002"
   tags:
   - {fileID: 11400000, guid: 2607e7659134498fa393a738e605d8aa, type: 2}
@@ -40,8 +40,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 179186e7b4494928b20d2b2d0e239de2, type: 2}
   - {fileID: 11400000, guid: 6a876e55970d4a2eadf76a819157acee, type: 2}
   - {fileID: 11400000, guid: 66f7849e9b9d4cf9b5c64da0beee9631, type: 2}
-  weaknessTopics:
-  - {fileID: 11400000, guid: a4d2942a07bf438aa20c1b726f21f178, type: 2}
+  weaknessTopics: []
   badText: "\u2026\u2026\u3046\u3093\u3001\u3048\u3048\u3088"
   goodText: "\u2026\u306A\u3093\u3067\u5206\u304B\u3063\u305F\u3093\u3002\u307E\u3042\u3001\u3048\u3048\u3051\u3069\u3002\u884C\u3053\u304B\u3002"
   perfectText: "\u884C\u3053\u3002"

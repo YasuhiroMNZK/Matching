@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C01_A1_False
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C01_A1_FALSE
-  displayText: "\u4E0D\u5E78\u306B\u3057\u3066\u56DE\u308B"
+  displayText: "\u4e0d\u5e78\u304f\u3070\u308a"
   genre: 1

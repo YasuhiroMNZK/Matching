@@ -15,7 +15,7 @@ MonoBehaviour:
   characterId: C03
   characterName: "\u30B7\u30A7\u30E0"
   species: "\u5929\u4F7F"
-  age: 1
+  age: 6157
   gender: "\u7537"
   profileImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
   iconImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
@@ -41,8 +41,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0144a13d183e65d46b9699b9187a446d, type: 2}
   - {fileID: 11400000, guid: 5fbc8898415aecb47930682afca80b1e, type: 2}
   - {fileID: 11400000, guid: ea183754e7c86d240baf367875ee70ce, type: 2}
-  weaknessTopics:
-  - {fileID: 11400000, guid: 87ac7cbdf95c26848a0fddb493516fe8, type: 2}
+  weaknessTopics: []
   badText: "\u2026\u2026\u3046\u3093\u3001\u3048\u3048\u3088"
   goodText: "\u2026\u306A\u3093\u3067\u5206\u304B\u3063\u305F\u3093\u3002\u307E\u3042\u3001\u3048\u3048\u3051\u3069\u3002\u884C\u3053\u304B\u3002"
   perfectText: "\u884C\u3053\u3002"

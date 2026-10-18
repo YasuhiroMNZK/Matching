@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: C02_G1_False
   m_EditorClassIdentifier: Assembly-CSharp::WordData
   wordId: C02_G1_FALSE
-  displayText: "\u6687\u3064\u3076\u3057"
+  displayText: "\u6687\u3064\u3076\u3057\u3059\u308b"
   genre: 2
