@@ -859,8 +859,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.17, y: 0.07}
   m_AnchorMax: {x: 0.83, y: 0.16}
-  m_AnchoredPosition: {x: 303, y: -386.96326}
-  m_SizeDelta: {x: 227.29413, y: 107.43118}
+  m_AnchoredPosition: {x: -0.0000076294, y: -288}
+  m_SizeDelta: {x: 491.947, y: 198.947}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &707983496
 MonoBehaviour:
@@ -938,7 +938,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -615243925407631207, guid: 7c47337225f8242469eae8f1d9bdffd0, type: 3}
+  m_Sprite: {fileID: 3981541346233360781, guid: 4d3cce27411445c4da36572daf495dc5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1272,7 +1272,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -27}
   m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975211548
@@ -1295,7 +1295,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3463aa9e729cca6438504882024c2b52, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f3d746ae098a1b144bdb26a5809cfcd4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d1c54305ae93ae94ab2871be7bda33d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27642c12a6e2cb941990f52bd1d321d7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2052,8 +2052,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.08, y: 0.2}
   m_AnchorMax: {x: 0.92, y: 0.76}
-  m_AnchoredPosition: {x: 293.6977, y: 1.999197}
-  m_SizeDelta: {x: 1248.3555, y: 1024.1384}
+  m_AnchoredPosition: {x: 667.191, y: -57.669}
+  m_SizeDelta: {x: 416.119, y: 779.606}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1897860223
 MonoBehaviour:
@@ -2068,7 +2068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.12, g: 0.09, b: 0.15, a: 0.98}
+  m_Color: {r: 0.12, g: 0.09, b: 0.15, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
