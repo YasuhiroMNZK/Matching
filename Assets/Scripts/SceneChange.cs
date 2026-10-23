@@ -25,7 +25,17 @@ internal sealed class GlobalTitleShortcut : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current == null || !Keyboard.current.f5Key.wasPressedThisFrame) return;
+        if (Keyboard.current == null) return;
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+            return;
+        }
+        if (!Keyboard.current.f5Key.wasPressedThisFrame) return;
         GameSession.Reset();
         GameAudioManager.StopAllAudio();
         Time.timeScale = 1f;

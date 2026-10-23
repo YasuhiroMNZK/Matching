@@ -24,6 +24,11 @@ public sealed class ChatMessageView : MonoBehaviour
     [SerializeField, Tooltip("X = left inset, Y = right inset")]
     private Vector2 npcHorizontalPadding = new(12f, 12f);
     [SerializeField, Min(0f)] private float verticalPadding = 8f;
+    [SerializeField, Range(0f, 1f), Tooltip("NPC bubble tip height measured from the top of the sprite.")]
+    private float npcBubbleTipFromTop = 0.26f;
+
+    private LayoutElement iconSlot;
+    private float iconHeight;
 
     public string Message { get; private set; }
     public bool IsPlayer { get; private set; }
@@ -41,6 +46,27 @@ public sealed class ChatMessageView : MonoBehaviour
         layout.childControlHeight = true;
         layout.childForceExpandWidth = false;
         layout.childForceExpandHeight = false;
+
+        if (characterIcon != null)
+        {
+            LayoutElement iconLayout = characterIcon.GetComponent<LayoutElement>();
+            float width = iconLayout != null && iconLayout.preferredWidth > 0f
+                ? iconLayout.preferredWidth : characterIcon.rectTransform.rect.width;
+            iconHeight = iconLayout != null && iconLayout.preferredHeight > 0f
+                ? iconLayout.preferredHeight : characterIcon.rectTransform.rect.height;
+            int sibling = characterIcon.transform.GetSiblingIndex();
+            var slot = new GameObject("CharacterIconSlot", typeof(RectTransform), typeof(LayoutElement));
+            slot.transform.SetParent(transform, false);
+            slot.transform.SetSiblingIndex(sibling);
+            iconSlot = slot.GetComponent<LayoutElement>();
+            iconSlot.preferredWidth = width;
+            iconSlot.preferredHeight = iconHeight;
+            characterIcon.transform.SetParent(slot.transform, false);
+            RectTransform iconRect = characterIcon.rectTransform;
+            iconRect.anchorMin = iconRect.anchorMax = new Vector2(0.5f, 1f);
+            iconRect.pivot = new Vector2(0.5f, 0.5f);
+            iconRect.sizeDelta = new Vector2(width, iconHeight);
+        }
     }
 
     public void SetMessage(string message, bool isPlayer, Sprite npcIcon = null, float availableRowWidth = float.PositiveInfinity)
@@ -57,6 +83,7 @@ public sealed class ChatMessageView : MonoBehaviour
         {
             characterIcon.sprite = npcIcon;
             characterIcon.gameObject.SetActive(!isPlayer && npcIcon != null);
+            if (iconSlot != null) iconSlot.gameObject.SetActive(!isPlayer && npcIcon != null);
         }
 
         leftSpacer.flexibleWidth = isPlayer ? 1f : 0f;
@@ -88,8 +115,20 @@ public sealed class ChatMessageView : MonoBehaviour
 
         bubbleLayout.preferredWidth = bubbleWidth;
         bubbleLayout.preferredHeight = bubbleHeight;
-        rowLayout.preferredHeight = Mathf.Max(bubbleHeight, characterIcon != null && characterIcon.gameObject.activeSelf
-            ? characterIcon.rectTransform.rect.height : 0f);
+        float topInset = 0f;
+        float iconBottom = 0f;
+        if (iconSlot != null && iconSlot.gameObject.activeSelf)
+        {
+            float tipFromTop = bubbleHeight * npcBubbleTipFromTop;
+            topInset = Mathf.Max(0f, iconHeight * 0.5f - tipFromTop);
+            characterIcon.rectTransform.anchoredPosition = new Vector2(0f, -tipFromTop);
+            iconBottom = tipFromTop + iconHeight * 0.5f;
+            iconSlot.preferredHeight = iconBottom;
+        }
+        // The slot reserves horizontal space; its child follows the bubble tip.
+        int topPadding = Mathf.CeilToInt(topInset);
+        GetComponent<HorizontalLayoutGroup>().padding.top = topPadding;
+        rowLayout.preferredHeight = topPadding + Mathf.Max(bubbleHeight, iconBottom);
 
         LayoutRebuilder.MarkLayoutForRebuild((RectTransform)transform);
     }

@@ -48,6 +48,7 @@ public sealed class ChatSceneController : MonoBehaviour
     private WordManager words;
     private readonly Dictionary<Button, WordGenre> wordButtons = new();
     private bool transitioning;
+    private bool invitationVisible;
     private bool refreshInvitationColors;
 
     private void OnValidate() => refreshInvitationColors = true;
@@ -77,7 +78,7 @@ public sealed class ChatSceneController : MonoBehaviour
         chat = gameObject.AddComponent<ChatManager>();
         chat.Configure(character, honesty, words);
 
-        invitationOverlay.SetActive(false);
+        InitializeInvitationView();
         ClearDynamicChildren(messageContent);
         ClearDynamicChildren(invitationWordList);
         BindEvents();
@@ -101,13 +102,24 @@ public sealed class ChatSceneController : MonoBehaviour
         invitationWordList = wordList;
         invitationHeadingText = inviteHeading;
         invitationDecideButton = decide;
-        invitationOverlay.SetActive(false);
+        InitializeInvitationView();
+    }
+
+    private void InitializeInvitationView()
+    {
+        invitationVisible = false;
+        invitationOverlay.SetActive(true);
+        if (panelList != null) panelList.SetActive(true);
+        invitationWordList.gameObject.SetActive(true);
+        invitationHeadingText.gameObject.SetActive(false);
+        invitationDecideButton.gameObject.SetActive(false);
     }
 
     private void BindEvents()
     {
         chat.OnReply.AddListener(OnReply);
         chat.OnDateInvitationRequired.AddListener(OnInvitationRequired);
+        chat.OnWordAcquired.AddListener(_ => RefreshWordList());
     }
 
     private void OnReply(string player, string npc)
@@ -178,6 +190,10 @@ public sealed class ChatSceneController : MonoBehaviour
     private void ShowInvitation()
     {
         if (transitioning) return;
+        if (chat.State == ChatState.AwaitingCommand && !chat.InviteToDate()) return;
+        invitationVisible = true;
+        RefreshWordList();
+        RefreshInvitationHeading();
         if (!words.HasInvitationWords)
         {
             if (chat.State != ChatState.DateInvitation)
@@ -187,8 +203,10 @@ public sealed class ChatSceneController : MonoBehaviour
             StartCoroutine(FailInvitationAndReturn());
             return;
         }
-        if (chat.State == ChatState.AwaitingCommand && !chat.InviteToDate()) return;
+    }
 
+    private void RefreshWordList()
+    {
         ClearWordButtons();
         for (int i = 0; i < words.AcquiredWords.Count; i++)
         {
@@ -198,19 +216,25 @@ public sealed class ChatSceneController : MonoBehaviour
                 word.DisplayText, SceneUiFactory.Muted);
             LayoutElement layout = button.gameObject.AddComponent<LayoutElement>();
             layout.preferredHeight = 78f;
-            button.onClick.AddListener(() => { words.TrySelect(word); RefreshInvitationHeading(); });
+            button.interactable = invitationVisible && !transitioning;
+            button.onClick.AddListener(() =>
+            {
+                if (!invitationVisible || transitioning || chat.State != ChatState.DateInvitation) return;
+                words.TrySelect(word);
+                RefreshInvitationHeading();
+            });
             wordButtons.Add(button, word.Genre);
         }
         RefreshInvitationWordColors();
-        RefreshInvitationHeading();
-        invitationOverlay.SetActive(true);
     }
 
     private void RefreshInvitationHeading()
     {
         invitationHeadingText.richText = true;
         invitationHeadingText.text = $"{InvitationSlot(words.SelectedPlace, WordGenre.Place)}に行って、{InvitationSlot(words.SelectedAction, WordGenre.Action)}しよう。{InvitationSlot(words.SelectedPurpose, WordGenre.Purpose)}ために。";
-        invitationDecideButton.gameObject.SetActive(words.IsInvitationComplete);
+        invitationHeadingText.gameObject.SetActive(invitationVisible);
+        invitationDecideButton.gameObject.SetActive(invitationVisible && words.IsInvitationComplete);
+        invitationDecideButton.interactable = invitationVisible && words.IsInvitationComplete && !transitioning;
     }
 
     private Color InvitationWordColor(WordGenre genre)
@@ -278,6 +302,9 @@ public sealed class ChatSceneController : MonoBehaviour
 
     private void SetConversationButtons(bool interactable)
     {
+        aizuchiButton.gameObject.SetActive(interactable);
+        deepDiveButton.gameObject.SetActive(interactable);
+        smallTalkButton.gameObject.SetActive(interactable);
         aizuchiButton.interactable = interactable;
         deepDiveButton.interactable = interactable;
         smallTalkButton.interactable = interactable;
@@ -286,7 +313,11 @@ public sealed class ChatSceneController : MonoBehaviour
     private void ClearWordButtons()
     {
         foreach (Button button in wordButtons.Keys)
-            if (button != null) Destroy(button.gameObject);
+            if (button != null)
+            {
+                button.gameObject.SetActive(false);
+                Destroy(button.gameObject);
+            }
         wordButtons.Clear();
     }
 

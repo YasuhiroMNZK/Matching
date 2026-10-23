@@ -88,6 +88,7 @@ MonoBehaviour:
   playerHorizontalPadding: {x: 10, y: 25}
   npcHorizontalPadding: {x: 50, y: 10}
   verticalPadding: 10
+  npcBubbleTipFromTop: 0.26
 --- !u!1 &6301852375025375355
 GameObject:
   m_ObjectHideFlags: 0

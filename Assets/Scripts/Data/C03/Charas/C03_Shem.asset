@@ -17,8 +17,8 @@ MonoBehaviour:
   species: "\u5929\u4F7F"
   age: 6157
   gender: "\u7537"
-  profileImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
-  iconImage: {fileID: 21300000, guid: b6a52fbb11cdc8d4e9e14e747a5db6ae, type: 3}
+  profileImage: {fileID: -4488124283405125612, guid: 801f941fc29fc6c4d8a8f46761a641c9, type: 3}
+  iconImage: {fileID: -8805095730267170446, guid: b127dcc7813fdbd43b25755d96d51874, type: 3}
   profileText: "\u304A\u5FCD\u3073\u3067\u4EBA\u9593\u754C\u3078\u6765\u307E\u3057\u305F\u3002"
   tags:
   - {fileID: 11400000, guid: 2607e7659134498fa393a738e605d8aa, type: 2}

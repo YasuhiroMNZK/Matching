@@ -137,7 +137,8 @@ public sealed class ChatManager : MonoBehaviour
             return false;
 
         TopicData topic = CurrentTopic;
-        PublishTopicReply(topic.AizuchiPlayerText, topic.AizuchiReplyText);
+        PublishMessage(string.Empty, topic.AizuchiReplyText);
+        PublishMessage(topic.AizuchiPlayerText, string.Empty);
         honestyManager.ApplyAizuchi();
         CompleteTurn();
         return true;

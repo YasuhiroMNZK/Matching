@@ -15,6 +15,16 @@ public sealed class EndingSceneController : MonoBehaviour
     [SerializeField] private Button retryButton;
     [SerializeField] private Image endingBackgroundImage;
 
+    [Header("Text Background")]
+    [SerializeField] private Image textBackground;
+    [SerializeField] private Color textBackgroundColor = new(1f, 1f, 1f, 0.8f);
+    [SerializeField] private Vector2 textBackgroundPadding = new(20f, 12f);
+    private Vector2 lastTextSize;
+    private string lastBackgroundText;
+    private bool refreshTextBackground = true;
+
+    private void OnValidate() => refreshTextBackground = true;
+
     [Header("Audio")]
     [SerializeField, Tooltip("Used for both GOOD and PERFECT endings.")]
     private AudioClip goodEndingBgm;
@@ -51,6 +61,58 @@ public sealed class EndingSceneController : MonoBehaviour
     {
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
             AdvanceLine();
+    }
+
+    private void LateUpdate()
+    {
+        if (endingBodyText == null) return;
+        if (refreshTextBackground || textBackground == null || lastBackgroundText != endingBodyText.text ||
+            lastTextSize != endingBodyText.rectTransform.rect.size || endingBodyText.havePropertiesChanged)
+            RefreshTextBackground();
+        if (textBackground != null) textBackground.color = textBackgroundColor;
+    }
+
+    private void RefreshTextBackground()
+    {
+        RectTransform textRect = endingBodyText.rectTransform;
+        if (textBackground == null)
+        {
+            var background = new GameObject("EndingTextBackground", typeof(RectTransform), typeof(Image));
+            background.transform.SetParent(textRect.parent, false);
+            textBackground = background.GetComponent<Image>();
+            var layout = background.AddComponent<LayoutElement>();
+            layout.ignoreLayout = true;
+        }
+        if (textBackground.transform.parent != textRect.parent)
+            textBackground.transform.SetParent(textRect.parent, false);
+        int textIndex = textRect.GetSiblingIndex();
+        int backgroundIndex = textBackground.transform.GetSiblingIndex();
+        textBackground.transform.SetSiblingIndex(backgroundIndex < textIndex ? textIndex - 1 : textIndex);
+        textBackground.raycastTarget = false;
+        textBackground.color = textBackgroundColor;
+        endingBodyText.ForceMeshUpdate();
+        TMP_TextInfo info = endingBodyText.textInfo;
+        int lineCount = Mathf.Max(1, info.lineCount);
+        float centerY = textRect.rect.center.y;
+        float height = endingBodyText.preferredHeight;
+        if (info.lineCount > 0)
+        {
+            // Use a full line box for every line, including short final lines.
+            float lineHeight = info.lineInfo[0].lineHeight;
+            height = Mathf.Max(height, lineHeight * lineCount);
+            centerY = (info.lineInfo[0].ascender + info.lineInfo[info.lineCount - 1].descender) * 0.5f;
+        }
+        RectTransform backgroundRect = textBackground.rectTransform;
+        backgroundRect.anchorMin = backgroundRect.anchorMax = new Vector2(0.5f, 0.5f);
+        backgroundRect.pivot = new Vector2(0.5f, 0.5f);
+        backgroundRect.localRotation = textRect.localRotation;
+        backgroundRect.localScale = textRect.localScale;
+        backgroundRect.position = textRect.TransformPoint(new Vector3(textRect.rect.center.x, centerY, 0f));
+        backgroundRect.sizeDelta = new Vector2(textRect.rect.width + Mathf.Max(0f, textBackgroundPadding.x) * 2f,
+            height + Mathf.Max(0f, textBackgroundPadding.y) * 2f);
+        lastTextSize = textRect.rect.size;
+        lastBackgroundText = endingBodyText.text;
+        refreshTextBackground = false;
     }
 
     public void AdvanceLine()

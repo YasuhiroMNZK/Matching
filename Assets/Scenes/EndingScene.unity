@@ -153,6 +153,9 @@ MonoBehaviour:
   endingBodyText: {fileID: 1897860223}
   retryButton: {fileID: 0}
   endingBackgroundImage: {fileID: 2121000003}
+  textBackground: {fileID: 0}
+  textBackgroundColor: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0.54901963}
+  textBackgroundPadding: {x: 20, y: 12}
   goodEndingBgm: {fileID: 8300000, guid: a7702042eda8e904c9fe8f47e57617d2, type: 3}
   badEndingBgm: {fileID: 8300000, guid: e6c4df3e009c5ee43922267a122e9208, type: 3}
   bgmVolume: 0.65
